@@ -66,6 +66,11 @@
 #define BME280_OSRS_P_x4       0x0C
 #define BME280_OSRS_P_x8       0x10
 #define BME280_OSRS_P_x16      0x14
+//------------------------------------------------
+#define BME280_MODE_MSK        0x03
+#define BME280_MODE_SLEEP      0x00
+#define BME280_MODE_FORCED     0x01
+#define BME280_MODE_NORMAL     0x03
 //---------------------------------------- humidity oversampling
 #define BME280_REG_CTRL_HUM    0xF2
 #define BME280_OSRS_H_MSK      0x07
@@ -75,6 +80,13 @@
 #define BME280_OSRS_H_x4       0x03
 #define BME280_OSRS_H_x8       0x04
 #define BME280_OSRS_H_x16      0x05
+//----------------------------------------------
+#define BME280_REGISTER_PRESSUREDATA 0xF7
+#define BME280_REGISTER_TEMPDATA 0xFA
+#define BME280_REGISTER_HUMIDDATA 0xFD
+//-----------------------------------------------
+#define bet16toword(a) ((((a)>>8)&0x00FF)|(((a)<<8)&0xFF00))
+#define bet24toword(a) ((((a)>>16)&0x000000ff)|((a)&0x0000ff00)|(((a)<<16)&0x00ff0000))
 
 typedef struct
 {
@@ -100,5 +112,9 @@ typedef struct
 
 void BME280_Init(void);
 uint16_t BME280_ReadCalibData(void);
-
+float BME280_ReadTemperature(void);
+float BME280_ReadPressure(void);
+float BME280_ReadHumidity(void);
+float BME280_ReadAltitude(float seaLevel);
+void printData(void);
 #endif
